@@ -30,15 +30,37 @@ public class Application {
     return wordList.contains(letters);
   }
 
+  @RequestMapping("/contains/{letters}/not/{theseLetters}")
+  List<String> containsNot(@PathVariable String letters, @PathVariable String theseLetters) {
+    return wordList.contains(letters, not(theseLetters));
+  }
+
   @RequestMapping("/contains/{letters}/and/{letters2}")
   List<String> contains(@PathVariable String letters, @PathVariable String letters2) {
     return wordList.contains(letters2, contains(letters));
+  }
+
+  @RequestMapping("/contains/{letters}/and/{letters2}/not/{theseLetters}")
+  List<String> containsNot(
+      @PathVariable String letters,
+      @PathVariable String letters2,
+      @PathVariable String theseLetters) {
+    return wordList.contains(letters2, containsNot(letters, theseLetters));
   }
 
   @RequestMapping("/contains/{letters}/and/{letters2}/and/{letters3}")
   List<String> contains(
       @PathVariable String letters, @PathVariable String letters2, @PathVariable String letters3) {
     return wordList.contains(letters3, contains(letters, letters2));
+  }
+
+  @RequestMapping("/contains/{letters}/and/{letters2}/and/{letters3}/not/{theseLetters}")
+  List<String> containsNot(
+          @PathVariable String letters,
+          @PathVariable String letters2,
+          @PathVariable String letters3,
+          @PathVariable String theseLetters) {
+    return wordList.contains(letters3, containsNot(letters, letters2, theseLetters));
   }
 
   @RequestMapping("/contains/{letters}/and/{letters2}/and/{letters3}/and/{letters4}")
@@ -65,6 +87,11 @@ public class Application {
     return wordList.match(pattern);
   }
 
+  @RequestMapping("/match/{pattern}/not/{theseLetters}")
+  List<String> matchNot(@PathVariable String pattern, @PathVariable String theseLetters) {
+    return wordList.not(theseLetters, wordList.match(pattern));
+  }
+
   @RequestMapping("/match/{pattern}/contains/{letters}")
   List<String> matchAndContain(@PathVariable String pattern, @PathVariable String letters) {
     return wordList.contains(letters, match(pattern));
@@ -83,5 +110,10 @@ public class Application {
       @PathVariable String letters2,
       @PathVariable String letters3) {
     return wordList.contains(letters3, matchAndContain(pattern, letters, letters2));
+  }
+
+  @RequestMapping("/not/{letters}")
+  List<String> not(@PathVariable String letters) {
+    return wordList.not(letters);
   }
 }

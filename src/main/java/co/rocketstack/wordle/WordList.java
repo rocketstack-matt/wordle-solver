@@ -27,6 +27,7 @@ public class WordList {
       new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))
           .lines()
           .filter(word -> !isUpperCase(word.charAt(0)))
+          .filter(word -> !word.contains("'"))
           .filter(word -> word.length() == 5)
           .forEach(wordList::add);
     } catch (IOException e) {
@@ -48,5 +49,15 @@ public class WordList {
   public List<String> contains(String letters, List<String> wordList) {
     Pattern regex = Pattern.compile("(" + letters + ")");
     return wordList.stream().filter(regex.asPredicate()).collect(Collectors.toList());
+  }
+
+  public List<String> not(String letters) {
+    Pattern regex = Pattern.compile("[" + letters + "]");
+    return wordList.stream().filter(regex.asPredicate().negate()).collect(Collectors.toList());
+  }
+
+  public List<String> not(String letters, List<String> wordList) {
+    Pattern regex = Pattern.compile("[" + letters + "]");
+    return wordList.stream().filter(regex.asPredicate().negate()).collect(Collectors.toList());
   }
 }
