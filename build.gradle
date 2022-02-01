@@ -1,9 +1,12 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.6.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group 'co.rocketstack.wordle-solver'
 version '1.0-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
     mavenCentral()
@@ -12,8 +15,11 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.3'
-    implementation 'org.springframework.boot:spring-boot-devtools:2.6.3'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-devtools'
+    implementation 'com.microsoft.azure:spring-cloud-starter-azure-spring-cloud-client:2.4.0'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.0'
 }
 
 test {

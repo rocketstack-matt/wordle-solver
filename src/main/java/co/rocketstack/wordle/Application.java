@@ -1,7 +1,9 @@
 package co.rocketstack.wordle;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,21 +12,17 @@ import java.util.List;
 
 @SpringBootApplication
 @RestController
+@EnableEurekaClient
 public class Application {
-  WordList wordList = new WordList();
+  private final WordList wordList;
+
+  @Autowired
+  public Application(WordList wordList) {
+    this.wordList = wordList;
+  }
 
   public static void main(String[] args) {
     SpringApplication.run(Application.class, args);
-  }
-
-  @RequestMapping("/hello/{name}")
-  String hello(@PathVariable String name) {
-    return "Hello " + name;
-  }
-
-  @RequestMapping("/hello/{name}/{surname}")
-  String hello(@PathVariable String name, @PathVariable String surname) {
-    return hello(name) + " " + surname;
   }
 
   @RequestMapping("/contains/{letters}")
