@@ -64,4 +64,24 @@ public class Application {
   List<String> match(@PathVariable String pattern) {
     return wordList.match(pattern);
   }
+
+  @RequestMapping("/match/{pattern}/contains/{letters}")
+  List<String> matchAndContain(@PathVariable String pattern, @PathVariable String letters) {
+    return wordList.contains(letters, match(pattern));
+  }
+
+  @RequestMapping("/match/{pattern}/contains/{letters}/and/{letters2}")
+  List<String> matchAndContain(
+      @PathVariable String pattern, @PathVariable String letters, @PathVariable String letters2) {
+    return wordList.contains(letters2, matchAndContain(pattern, letters));
+  }
+
+  @RequestMapping("/match/{pattern}/contains/{letters}/and/{letters2}/and/{letters3}")
+  List<String> matchAndContain(
+      @PathVariable String pattern,
+      @PathVariable String letters,
+      @PathVariable String letters2,
+      @PathVariable String letters3) {
+    return wordList.contains(letters3, matchAndContain(pattern, letters, letters2));
+  }
 }
