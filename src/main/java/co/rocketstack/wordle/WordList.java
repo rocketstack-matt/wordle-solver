@@ -42,12 +42,15 @@ public class WordList {
   }
 
   public List<String> contains(String letters) {
-    Pattern regex = Pattern.compile("(" + letters + ")");
-    return wordList.stream().filter(regex.asPredicate()).collect(Collectors.toList());
+    return contains(letters, this.wordList);
   }
 
   public List<String> contains(String letters, List<String> wordList) {
-    Pattern regex = Pattern.compile("(" + letters + ")");
+    StringBuilder sb = new StringBuilder(".*");
+    letters.chars().forEach(c -> sb.append("(?=.*").append((char)c).append(")"));
+    sb.append(".*");
+
+    Pattern regex = Pattern.compile(sb.toString());
     return wordList.stream().filter(regex.asPredicate()).collect(Collectors.toList());
   }
 

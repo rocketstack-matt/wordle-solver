@@ -6,8 +6,8 @@ With wordle-solver you can:
 Check which words contain known letters or groups of letters 
 
 e.g. 
-- words containg 'a': https://wordle-solver-wordle.azuremicroservices.io/contains/a
-- words containing 'a' and 'bh': https://wordle-solver-wordle.azuremicroservices.io/contains/a/and/th
+- words containing 'a': https://wordle-solver-wordle.azuremicroservices.io/contains/a
+- words containing 'a' and 'bh': https://wordle-solver-wordle.azuremicroservices.io/contains/abh
 
 Check a specific pattern where you know the position of letters and use a full stop '.' for the ones you don't know
 
@@ -17,7 +17,7 @@ e.g.
 Check the words where you know the position of some letters and just know other letters but not where they are
 
 e.g.
-- starts with 'l' has 'h' in position 4 and also contains 'g' and 't': https://wordle-solver-wordle.azuremicroservices.io/match/l..h./contains/g/and/t
+- starts with 'l' has 'h' in position 4 and also contains 'g' and 't': https://wordle-solver-wordle.azuremicroservices.io/match/l..h./contains/gt
 
 Check for words excluding letters you know aren't included 
 
@@ -27,7 +27,7 @@ e.g.
 What about when you know some letters but not others
 
 e.g.
-- contains 'e' and 'th' but not 'i', 'o' or 'u': https://wordle-solver-wordle.azuremicroservices.io/contains/e/and/th/not/iou
+- contains 'e' and 'th' but not 'i', 'o' or 'u': https://wordle-solver-wordle.azuremicroservices.io/contains/eth/not/iou
 
 I know some exact positions and know other letters that aren't part of the word
 

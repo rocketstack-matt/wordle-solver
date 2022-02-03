@@ -35,53 +35,6 @@ public class Application {
     return wordList.contains(letters, not(theseLetters));
   }
 
-  @RequestMapping("/contains/{letters}/and/{letters2}")
-  List<String> contains(@PathVariable String letters, @PathVariable String letters2) {
-    return wordList.contains(letters2, contains(letters));
-  }
-
-  @RequestMapping("/contains/{letters}/and/{letters2}/not/{theseLetters}")
-  List<String> containsNot(
-      @PathVariable String letters,
-      @PathVariable String letters2,
-      @PathVariable String theseLetters) {
-    return wordList.contains(letters2, containsNot(letters, theseLetters));
-  }
-
-  @RequestMapping("/contains/{letters}/and/{letters2}/and/{letters3}")
-  List<String> contains(
-      @PathVariable String letters, @PathVariable String letters2, @PathVariable String letters3) {
-    return wordList.contains(letters3, contains(letters, letters2));
-  }
-
-  @RequestMapping("/contains/{letters}/and/{letters2}/and/{letters3}/not/{theseLetters}")
-  List<String> containsNot(
-          @PathVariable String letters,
-          @PathVariable String letters2,
-          @PathVariable String letters3,
-          @PathVariable String theseLetters) {
-    return wordList.contains(letters3, containsNot(letters, letters2, theseLetters));
-  }
-
-  @RequestMapping("/contains/{letters}/and/{letters2}/and/{letters3}/and/{letters4}")
-  List<String> contains(
-      @PathVariable String letters,
-      @PathVariable String letters2,
-      @PathVariable String letters3,
-      @PathVariable String letters4) {
-    return wordList.contains(letters4, contains(letters, letters2, letters3));
-  }
-
-  @RequestMapping("/contains/{letters}/and/{letters2}/and/{letters3}/and/{letters4}/and/{letters5}")
-  List<String> contains(
-      @PathVariable String letters,
-      @PathVariable String letters2,
-      @PathVariable String letters3,
-      @PathVariable String letters4,
-      @PathVariable String letters5) {
-    return wordList.contains(letters5, contains(letters, letters2, letters3, letters4));
-  }
-
   @RequestMapping("/match/{pattern}")
   List<String> match(@PathVariable String pattern) {
     return wordList.match(pattern);
@@ -97,19 +50,10 @@ public class Application {
     return wordList.contains(letters, match(pattern));
   }
 
-  @RequestMapping("/match/{pattern}/contains/{letters}/and/{letters2}")
-  List<String> matchAndContain(
-      @PathVariable String pattern, @PathVariable String letters, @PathVariable String letters2) {
-    return wordList.contains(letters2, matchAndContain(pattern, letters));
-  }
-
-  @RequestMapping("/match/{pattern}/contains/{letters}/and/{letters2}/and/{letters3}")
-  List<String> matchAndContain(
-      @PathVariable String pattern,
-      @PathVariable String letters,
-      @PathVariable String letters2,
-      @PathVariable String letters3) {
-    return wordList.contains(letters3, matchAndContain(pattern, letters, letters2));
+  @RequestMapping("/match/{pattern}/contains/{letters}/not/{theseLetters}")
+  List<String> matchContainNot(
+      @PathVariable String pattern, @PathVariable String letters, @PathVariable String theseLetters) {
+    return wordList.not(theseLetters, matchAndContain(pattern, letters));
   }
 
   @RequestMapping("/not/{letters}")
