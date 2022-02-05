@@ -2,7 +2,7 @@
 
 Need a little help to solve your daily [Wordle](https://www.powerlanguage.co.uk/wordle/)?
 
-| What we know                                                                                                                                   |                                                           |
+| What you're looking for                                                                                                                                  |                                                           |
 |------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
 | Find words containing letters 'a' 't' 'h' in any position                                                                                      | https://wordle-solver-wordle.azuremicroservices.io/contains/ath                  |
 | Find words containing letters 'a' 't' 'h' in any position but not letters 'b' or 's'                                                           | https://wordle-solver-wordle.azuremicroservices.io/contains/ath/not/bs           |
