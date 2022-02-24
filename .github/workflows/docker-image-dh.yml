@@ -1,0 +1,41 @@
+name: Build Docker - Push to Docker Hub
+
+on:
+  workflow_dispatch
+
+jobs:
+  
+  build:
+    
+    name: Build Image
+    runs-on: ubuntu-latest
+
+   
+    steps:
+
+    - name: Check out code
+      uses: actions/checkout@v2
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        java-version: 17
+        distribution: 'adopt'
+        
+    - name: Build with Gradle
+      run: ./gradlew build
+    
+    - name: Configure Docker credentials
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.ROCKETSTACK_GITHUB_DOCKER_USER }}
+        password: ${{ secrets.ROCKETSTACK_GITHUB_DOCKER_TOKEN }}
+
+    - name: Build, tag, and push image to Docker Hub
+      env:
+        DH_REGISTRY: rocketstack
+        DH_REPOSITORY: wordle-solver
+        IMAGE_TAG: latest
+      run: |
+        docker build -t $DH_REGISTRY/$DH_REPOSITORY:$IMAGE_TAG .
+        docker push $DH_REGISTRY/$DH_REPOSITORY:$IMAGE_TAG
