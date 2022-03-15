@@ -42,9 +42,10 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://wordle-solver.azurewebsites.net/",
+  "proxy": "http://localhost:8080",
   "devDependencies": {
     "@types/react-router-dom": "^5.3.3",
     "prettier": "2.5.1"
-  }
+  },
+  "homepage": "https://rocket-stack.github.io/wordle-solver/"
 }
