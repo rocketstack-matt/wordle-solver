@@ -18,7 +18,7 @@ class WordList extends Component {
 
   queryService(match) {
     while (match.length < 5) match += ".";
-    fetch("http://wordle-solver.azurewebsites.net/match/" + match)
+    fetch("https://wordle-solver.azurewebsites.net/match/" + match)
       .then((response) => response.json())
       .then((data) => this.setState({ words: data }))
       .catch((error) => console.log("Error:", error));
