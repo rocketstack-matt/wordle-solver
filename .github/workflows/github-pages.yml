@@ -1,4 +1,4 @@
-name: Deploy UI to Github Pages
+name: Build React UI for Github Pages
 
 on:
   workflow_dispatch
