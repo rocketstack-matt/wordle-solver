@@ -47,5 +47,5 @@
     "@types/react-router-dom": "^5.3.3",
     "prettier": "2.5.1"
   },
-  "homepage": "https://rocket-stack.github.io/wordle-solver/"
+  "homepage": "http://wordle.rocketstack.co/"
 }
