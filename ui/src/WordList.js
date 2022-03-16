@@ -18,7 +18,9 @@ class WordList extends Component {
 
   queryService(match) {
     while (match.length < 5) match += ".";
-    fetch("https://wordle-solver.azurewebsites.net/match/" + match)
+    fetch(
+      process.env.REACT_APP_WORDLE_SOLVER_API + "match/" + match.toLowerCase()
+    )
       .then((response) => response.json())
       .then((data) => this.setState({ words: data }))
       .catch((error) => console.log("Error:", error));
@@ -46,6 +48,7 @@ class WordList extends Component {
                 id="formControlLg"
                 className="form-control form-control-lg"
                 onChange={this.handleChange}
+                spellCheck="false"
               />
             </div>
           </div>
