@@ -1,64 +1,36 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
+import "./WordList.css";
+import { useRecoilValue } from "recoil";
+import { keyState } from "./StateStore";
 
-class WordList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { words: [] };
-    this.handleChange = this.handleChange.bind(this);
-  }
+export default function WordList() {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [words, updateWords] = useState([]);
+  const keyPresses = useRecoilValue(keyState);
 
-  componentDidMount() {
-    this.queryService("");
-  }
+  useEffect(
+    () => queryService(keyPresses.length === 0 ? "....." : keyPresses),
+    [keyPresses]
+  );
 
-  handleChange(event) {
-    let match = event.target.value ? event.target.value : ".....";
-    this.queryService(match);
-  }
-
-  queryService(match) {
+  const queryService = (match) => {
     while (match.length < 5) match += ".";
     fetch(
       process.env.REACT_APP_WORDLE_SOLVER_API + "match/" + match.toLowerCase()
     )
       .then((response) => response.json())
-      .then((data) => this.setState({ words: data }))
-      .catch((error) => console.log("Error:", error));
-  }
+      .then((json) => updateWords(json))
+      .then(() => setIsLoading(false))
+      .catch((error) => console.log(error));
+  };
 
-  render() {
-    const { words, isLoading } = this.state;
-
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
-
-    const wordList = words.map((word) => {
-      return <div className="list-inline-item">{word}</div>;
-    });
-
-    return (
-      <div className="container bg-faded">
-        <div className="form-group w-100">
-          <h3 className="text-center">Wordle Solver</h3>
-          <div>
-            <div className="form-outline w-25 mx-auto">
-              <input
-                type="text"
-                id="formControlLg"
-                className="form-control form-control-lg"
-                onChange={this.handleChange}
-                spellCheck="false"
-              />
-            </div>
-          </div>
-          <div className="col-4 mx-auto">
-            <center>{wordList}</center>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  return (
+    <div id="wordlist-cont">
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        words.map((word, index) => <div key={"word-" + index}>{word}</div>)
+      )}
+    </div>
+  );
 }
-
-export default WordList;
