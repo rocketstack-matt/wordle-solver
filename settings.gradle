@@ -1,2 +1,5 @@
 rootProject.name = 'wordle-solver'
 
+ext {
+    appVersion = '2.0.0' // Upgraded version to reflect Java 21 upgrade
+}

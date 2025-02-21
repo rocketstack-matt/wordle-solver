@@ -3,60 +3,66 @@ package co.rocketstack.wordle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.boot.info.BuildProperties;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @SpringBootApplication
 @RestController
 public class Application {
-  private final WordList wordList;
+    private final WordList wordList;
+    private final BuildProperties buildProperties;
 
-  @Autowired
-  public Application(WordList wordList) {
-    this.wordList = wordList;
-  }
+    @Autowired
+    public Application(WordList wordList, BuildProperties buildProperties) {
+        this.wordList = wordList;
+        this.buildProperties = buildProperties;
+    }
 
-  public static void main(String[] args) {
-    SpringApplication.run(Application.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
 
-  @RequestMapping(value = "/contains/{letters}", method = RequestMethod.GET)
-  List<String> contains(@PathVariable String letters) {
-    return wordList.contains(letters);
-  }
+    @GetMapping("/version")
+    public Map<String, String> version() {
+        return Map.of("version", buildProperties.getVersion());
+    }
 
-  @RequestMapping(value = "/contains/{letters}/not/{theseLetters}", method = RequestMethod.GET)
-  List<String> containsNot(@PathVariable String letters, @PathVariable String theseLetters) {
-    return wordList.contains(letters, not(theseLetters));
-  }
+    @GetMapping("/contains/{letters}")
+    List<String> contains(@PathVariable String letters) {
+        return wordList.contains(letters);
+    }
 
-  @RequestMapping(value = "/match/{pattern}", method = RequestMethod.GET)
-  List<String> match(@PathVariable String pattern) {
-    return wordList.match(pattern);
-  }
+    @GetMapping("/contains/{letters}/not/{theseLetters}")
+    List<String> containsNot(@PathVariable String letters, @PathVariable String theseLetters) {
+        return wordList.contains(letters, wordList.not(theseLetters));
+    }
 
-  @RequestMapping(value = "/match/{pattern}/not/{theseLetters}", method = RequestMethod.GET)
-  List<String> matchNot(@PathVariable String pattern, @PathVariable String theseLetters) {
-    return wordList.not(theseLetters, wordList.match(pattern));
-  }
+    @GetMapping("/match/{pattern}")
+    List<String> match(@PathVariable String pattern) {
+        return wordList.match(pattern);
+    }
 
-  @RequestMapping(value = "/match/{pattern}/contains/{letters}", method = RequestMethod.GET)
-  List<String> matchAndContain(@PathVariable String pattern, @PathVariable String letters) {
-    return wordList.contains(letters, match(pattern));
-  }
+    @GetMapping("/match/{pattern}/not/{theseLetters}")
+    List<String> matchNot(@PathVariable String pattern, @PathVariable String theseLetters) {
+        return wordList.not(theseLetters, wordList.match(pattern));
+    }
 
-  @RequestMapping(value = "/match/{pattern}/contains/{letters}/not/{theseLetters}", method = RequestMethod.GET)
-  List<String> matchContainNot(
-      @PathVariable String pattern, @PathVariable String letters, @PathVariable String theseLetters) {
-    return wordList.not(theseLetters, matchAndContain(pattern, letters));
-  }
+    @GetMapping("/match/{pattern}/contains/{letters}")
+    List<String> matchAndContain(@PathVariable String pattern, @PathVariable String letters) {
+        return wordList.contains(letters, match(pattern));
+    }
 
-  @RequestMapping(value = "/not/{letters}", method = RequestMethod.GET)
-  List<String> not(@PathVariable String letters) {
-    return wordList.not(letters);
-  }
+    @GetMapping("/match/{pattern}/contains/{letters}/not/{theseLetters}")
+    List<String> matchContainNot(
+            @PathVariable String pattern, @PathVariable String letters, @PathVariable String theseLetters) {
+        return wordList.not(theseLetters, matchAndContain(pattern, letters));
+    }
+
+    @GetMapping("/not/{letters}")
+    List<String> not(@PathVariable String letters) {
+        return wordList.not(letters);
+    }
 }

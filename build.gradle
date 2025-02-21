@@ -1,26 +1,40 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.6.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.4'
 }
 
 group 'co.rocketstack.wordle-solver'
-version '1.0-SNAPSHOT'
-sourceCompatibility = JavaVersion.VERSION_1_8
+version '2.0.0'  
+sourceCompatibility = JavaVersion.VERSION_21
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-devtools'
-    implementation 'org.springframework.boot:spring-boot-starter-parent:2.6.3'
-    implementation 'com.microsoft.azure:spring-cloud-starter-azure-spring-cloud-client:2.4.0'
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+}
+
+bootRun {
+    systemProperty 'application.version', version
+}
+
+springBoot {
+    buildInfo()
+}
+
+processResources {
+    filesMatching('application.properties') {
+        expand(
+            'version': version
+        )
+    }
 }
 
 test {

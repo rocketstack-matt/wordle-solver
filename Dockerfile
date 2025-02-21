@@ -1,6 +1,6 @@
-FROM openjdk:8-jdk-alpine
+FROM eclipse-temurin:21-jdk-alpine
 EXPOSE 8080
 
 VOLUME /tmp
-COPY build/libs/wordle-solver-1.0-SNAPSHOT.jar app.jar
+COPY build/libs/wordle-solver-2.0.0.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
